@@ -7,40 +7,40 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ForumAdapter(
-    val forums: ArrayList<ForumModel.Data>,
+class NewsAdapter(
+    val news: ArrayList<NewsModel.Data>,
     val listener: onAdapterListener
-    ): RecyclerView.Adapter<ForumAdapter.ViewHolder>(){
+): RecyclerView.Adapter<NewsAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)= ViewHolder (
         LayoutInflater.from(parent.context)
             .inflate(R.layout.adapter, parent, false)
     )
 
-    override fun onBindViewHolder(holder: ForumAdapter.ViewHolder, position: Int) {
-        val content = forums[position]
+    override fun onBindViewHolder(holder: NewsAdapter.ViewHolder, position: Int) {
+        val content = news[position]
 
-        val title = content.title
-        holder.text_title.text = title
+        val headline = content.headline
+        holder.text_title.text = headline
         holder.itemView.setOnClickListener{
             listener.onClick( content )
         }
     }
 
-    override fun getItemCount() = forums.size
+    override fun getItemCount() = news.size
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val text_title = view.findViewById<TextView>(R.id.title)
     }
 
-    public fun setData(data: List<ForumModel.Data>)
+    public fun setData(data: List<NewsModel.Data>)
     {
-        forums.clear()
-        forums.addAll(data)
+        news.clear()
+        news.addAll(data)
         notifyDataSetChanged()
     }
 
     interface onAdapterListener
     {
-        fun onClick(data: ForumModel.Data)
+        fun onClick(data: NewsModel.Data)
     }
 }

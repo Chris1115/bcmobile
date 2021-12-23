@@ -1,5 +1,5 @@
 package com.example.final_mp
 
-class LoginModel (
-    val message: String
-    )
+import java.io.Serializable
+
+class LoginModel (val message: String)

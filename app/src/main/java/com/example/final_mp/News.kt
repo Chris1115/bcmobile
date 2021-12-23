@@ -10,16 +10,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Forum : AppCompatActivity() {
+class News : AppCompatActivity() {
 
     private val API by lazy { APIRetrofit().endpoint }
-    private lateinit var adapter: ForumAdapter
+    private lateinit var adapter: NewsAdapter
     private lateinit var listdata: RecyclerView
-    private lateinit var button: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_forum)
+        setContentView(R.layout.activity_news)
         setupView()
         setupList()
         setupListener()
@@ -33,14 +32,13 @@ class Forum : AppCompatActivity() {
     private fun setupView()
     {
         listdata = findViewById(R.id.list_data)
-        button = findViewById(R.id.fab_create)
     }
     private fun setupList()
     {
-        adapter = ForumAdapter(arrayListOf(), object : ForumAdapter.onAdapterListener{
-            override fun onClick(data: ForumModel.Data) {
-                startActivity(Intent(this@Forum, Forum_detail::class.java)
-                    .putExtra("title", data)
+        adapter = NewsAdapter(arrayListOf(), object : NewsAdapter.onAdapterListener{
+            override fun onClick(data: NewsModel.Data) {
+                startActivity(Intent(this@News, News_detail::class.java)
+                    .putExtra("content", data)
                 )
             }
         })
@@ -49,25 +47,23 @@ class Forum : AppCompatActivity() {
 
     private fun setupListener()
     {
-        button.setOnClickListener{
-            startActivity(Intent(this, Dashboard::class.java))
-        }
+
     }
 
     private fun getForum()
     {
         super.onStart()
 
-        API.forum_data().enqueue(object: Callback<ForumModel>{
-            override fun onResponse(call: Call<ForumModel>, response: Response<ForumModel>) {
+        API.news_data().enqueue(object: Callback<NewsModel>{
+            override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
                 if(response.isSuccessful)
                 {
-                    val result = response.body()!!.forums_data
+                    val result = response.body()!!.news_data
                     adapter.setData(result)
                 }
             }
 
-            override fun onFailure(call: Call<ForumModel>, t: Throwable) {
+            override fun onFailure(call: Call<NewsModel>, t: Throwable) {
                 Log.e("", t.toString())
             }
 

@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.hide()
+
         setupView()
         setupListener()
     }
@@ -35,11 +37,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupListener()
     {
-//        var access: Boolean = false
+        var access: Boolean = false
         submitBtn.setOnClickListener{
             if (username.text.toString().isNotEmpty())
             {
-                API.login(username.text.toString())
+                API.login(username.text.toString(), password.text.toString())
                     .enqueue(object : Callback<LoginModel>{
                         override fun onResponse( call: Call<LoginModel>, response: Response<LoginModel>)
                         {
@@ -50,10 +52,12 @@ class MainActivity : AppCompatActivity() {
                                 if (result!!.message == "Login Success") {
                                     Toast.makeText(
                                         applicationContext,
-                                        result!!.message, Toast.LENGTH_SHORT
+//                                        result!!.message,
+                                        result!!.message,
+                                        Toast.LENGTH_SHORT
                                     ).show()
 
-//                                    access = true
+                                    access = true
                                 }
                                 else
                                 {
@@ -85,15 +89,16 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
 
-//            if(access)
-//            {
-//                startActivity(Intent(this, Dashboard::class.java))
-//            }
-//            else
-//            {
-//                Log.e("Login", "Login failed")
-//            }
-            startActivity(Intent(this, Dashboard::class.java))
+            if(access)
+            {
+                startActivity(Intent(this, Dashboard::class.java)
+            .putExtra("username", username.text.toString())
+                )
+            }
+            else
+            {
+                Log.e("Login", "Login failed")
+            }
         }
     }
 }

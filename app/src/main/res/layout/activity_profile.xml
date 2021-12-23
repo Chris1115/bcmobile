@@ -4,37 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Dashboard"
-    android:padding="10dp"
+    tools:context=".Profile"
+    android:padding="20dp"
     >
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/forumbtn"
+    <TextView
+        android:id="@+id/text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Goto Forum"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_username"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39"
-        tools:layout_editor_absoluteX="10dp" />
+        tools:layout_editor_absoluteX="20dp"
+        tools:text="name" />
+
+    <TextView
+        android:id="@+id/text_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/logoutbtn"
+        app:layout_constraintTop_toTopOf="@id/text_name"
+        tools:layout_editor_absoluteX="20dp"
+        tools:text="username" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/newsbtn"
+        android:id="@+id/logoutbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Goto News"
+        android:text="LOGOUT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.562"
-        tools:layout_editor_absoluteX="9dp" />
+        app:layout_constraintVertical_bias="0.74"
+        tools:layout_editor_absoluteX="20dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/profilebtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Goto Profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.727"
-        tools:layout_editor_absoluteX="16dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
