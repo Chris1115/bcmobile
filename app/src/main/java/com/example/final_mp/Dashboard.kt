@@ -25,6 +25,8 @@ class Dashboard : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        supportActionBar?.hide()
+
         setupView()
         setupListener()
     }
