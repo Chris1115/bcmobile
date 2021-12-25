@@ -1,4 +1,4 @@
-package com.example.final_mp
+package com.example.final_mp.backend
 
 import java.io.Serializable
 

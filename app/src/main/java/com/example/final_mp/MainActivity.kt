@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import com.example.final_mp.backend.APIRetrofit
+import com.example.final_mp.backend.LoginModel
 import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             {
                 API.login(username.text.toString(), password.text.toString())
                     .enqueue(object : Callback<LoginModel>{
-                        override fun onResponse( call: Call<LoginModel>, response: Response<LoginModel>)
+                        override fun onResponse(call: Call<LoginModel>, response: Response<LoginModel>)
                         {
                             if (response.isSuccessful)
                             {

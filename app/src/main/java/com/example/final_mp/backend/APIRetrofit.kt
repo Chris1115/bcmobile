@@ -1,4 +1,4 @@
-package com.example.final_mp
+package com.example.final_mp.backend
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

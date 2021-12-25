@@ -1,57 +1,52 @@
 package com.example.final_mp
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.final_mp.backend.APIRetrofit
+import com.example.final_mp.fragment.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.math.log
+import com.google.android.material.navigation.NavigationBarView
 
 class Dashboard : AppCompatActivity() {
 
-    private val API by lazy { APIRetrofit().endpoint }
     private val username by lazy { intent.getStringExtra("username") }
-    private lateinit var forumbtn: MaterialButton
-    private lateinit var newsbtn: MaterialButton
-    private lateinit var profilebtn: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        val dashboard = dashboard()
+        val news = news()
+        val forum = forum()
+        val profile = profile()
+        val bottom_navigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        curr(dashboard, username.toString())
+
+
+        bottom_navigation.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item ->
+
+            when (item.itemId) {
+                R.id.dashboard -> curr(dashboard, username.toString())
+                R.id.news -> curr(news, username.toString())
+                R.id.forum -> curr(forum, username.toString())
+                R.id.profile -> curr(profile, username.toString())
+            }
+            true
+        })
+
         supportActionBar?.hide()
 
-        setupView()
-        setupListener()
     }
 
-    private fun setupView()
-    {
-        forumbtn = findViewById(R.id.forumbtn)
-        newsbtn = findViewById(R.id.newsbtn)
-        profilebtn = findViewById(R.id.profilebtn)
-    }
-
-    private fun setupListener()
-    {
-        forumbtn.setOnClickListener{
-            startActivity(Intent(this, Forum::class.java))
-        }
-
-        newsbtn.setOnClickListener{
-            startActivity(Intent(this, News::class.java))
-        }
-
-        profilebtn.setOnClickListener {
-            startActivity(Intent(this, Profile::class.java)
-                .putExtra("username", username)
-            )
+    private fun curr(fragment: Fragment, data : String){
+        val bundle = Bundle()
+        bundle.putString("username", data)
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fram_nav, fragment)
+                .commit()
         }
     }
 }

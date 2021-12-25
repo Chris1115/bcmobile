@@ -1,4 +1,4 @@
-package com.example.final_mp
+package com.example.final_mp.backend
 
 import android.view.LayoutInflater
 import android.view.View

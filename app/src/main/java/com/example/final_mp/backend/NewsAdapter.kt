@@ -1,11 +1,11 @@
-package com.example.final_mp
+package com.example.final_mp.backend
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.final_mp.R
 
 class NewsAdapter(
     val news: ArrayList<NewsModel.Data>,
@@ -16,7 +16,7 @@ class NewsAdapter(
             .inflate(R.layout.adapter, parent, false)
     )
 
-    override fun onBindViewHolder(holder: NewsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val content = news[position]
 
         val headline = content.headline
