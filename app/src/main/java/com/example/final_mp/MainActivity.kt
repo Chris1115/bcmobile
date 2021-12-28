@@ -1,5 +1,6 @@
 package com.example.final_mp
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -60,6 +61,15 @@ class MainActivity : AppCompatActivity() {
                                     ).show()
 
                                     access = true
+
+                                    if(access)
+                                    {
+                                        move(this@MainActivity, username.text.toString())
+                                    }
+                                    else
+                                    {
+                                        Log.e("Login", "Login failed")
+                                    }
                                 }
                                 else
                                 {
@@ -90,17 +100,11 @@ class MainActivity : AppCompatActivity() {
                     , Toast.LENGTH_SHORT
                 ).show()
             }
-
-            if(access)
-            {
-                startActivity(Intent(this, Dashboard::class.java)
-            .putExtra("username", username.text.toString())
-                )
-            }
-            else
-            {
-                Log.e("Login", "Login failed")
-            }
         }
+    }
+
+    private fun move(context: Context, username : String){
+        startActivity(Intent(context, Dashboard::class.java)
+            .putExtra("username", username))
     }
 }

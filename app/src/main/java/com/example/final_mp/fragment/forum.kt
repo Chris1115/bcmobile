@@ -54,7 +54,6 @@ class forum: Fragment() {
                 activity.supportFragmentManager.beginTransaction()
                     .apply {
                         replace(R.id.fram_nav, forum_detail, forum_detail::class.java.simpleName)
-                            .addToBackStack(null)
                             .commit()
                     }
             }

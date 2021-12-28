@@ -34,14 +34,14 @@ class news: Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        getForum()
+        getNews()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         val view = inflater.inflate(R.layout.news, container, false)
         val activity = view!!.context as AppCompatActivity
-        val news_detail = forum_detail()
+        val news_detail = news_detail()
 
         listdata = view.findViewById(R.id.list_data)
 
@@ -54,7 +54,6 @@ class news: Fragment() {
                 activity.supportFragmentManager.beginTransaction()
                     .apply {
                         replace(R.id.fram_nav, news_detail, news_detail::class.java.simpleName)
-                            .addToBackStack(null)
                             .commit()
                     }
             }
@@ -76,7 +75,7 @@ class news: Fragment() {
     }
 
 
-    private fun getForum()
+    private fun getNews()
     {
         super.onStart()
 
@@ -84,12 +83,12 @@ class news: Fragment() {
             override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
                 if(response.isSuccessful)
                 {
-                    Log.e("Forum", response.toString())
+                    Log.e("News", response.toString())
                     val result = response.body()!!.news_data
                     adapter.setData(result)
 
                     result.forEach {
-                        Log.e("Forum", it.headline.toString())
+                        Log.e("News", it.headline.toString())
                     }
                 }
             }

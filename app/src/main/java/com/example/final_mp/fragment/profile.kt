@@ -1,5 +1,7 @@
 package com.example.final_mp.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,9 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.final_mp.MainActivity
 import com.example.final_mp.R
 import com.example.final_mp.backend.APIRetrofit
+import com.example.final_mp.backend.ForumModel
+import com.example.final_mp.backend.LogoutModel
 import com.example.final_mp.backend.UserModel
+import com.example.final_mp.helper.session
+import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +30,8 @@ class profile : Fragment() {
     private val API by lazy { APIRetrofit().endpoint }
     private lateinit var text_name : TextView
     private lateinit var text_username : TextView
-    private var username_data : String = ""
+    private lateinit var logoutbtn : MaterialButton
+    private lateinit var session : session
     private var param1: String? = null
     private var param2: String? = null
 
@@ -31,29 +41,56 @@ class profile : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-        getData()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_profile, container, false)
+        val activity = view!!.context as AppCompatActivity
+//        val intent = Intent(this, MainActivity::class.java)
 
-        val args = this.arguments
-        val data = args?.getString("username")
+        text_name = view.findViewById(R.id.text_name)
+        logoutbtn = view.findViewById(R.id.logoutbtn)
 
-        if (data != null)
-        {
-            text_name = view.findViewById(R.id.title)
-            text_username = view.findViewById(R.id.question)
+        logoutbtn.setOnClickListener {
+            API.logout().enqueue(object: Callback<LogoutModel>{
+                override fun onResponse(call: Call<LogoutModel>, response: Response<LogoutModel>) {
+
+                    if (response.isSuccessful)
+                    {
+                        val result = response.body()
+
+                        if (result!!.message == "Logout Success") {
+//                            startActivity(intent)
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+                override fun onFailure(call: Call<LogoutModel>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
         }
 
-        username_data = data.toString()
+
+        val username_data = arguments?.get("username")
+        Log.e("Profile", username_data.toString())
+
+        getData(username_data.toString())
+
         return view
     }
 
+
     companion object {
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
         fun newInstance(param1: String, param2: String) =
             profile().apply {
                 arguments = Bundle().apply {
@@ -63,20 +100,20 @@ class profile : Fragment() {
             }
     }
 
-    private fun getData()
+    private fun getData(username: String)
     {
-        API.user_data(username_data).enqueue(object: Callback<UserModel> {
+        API.user_data(username).enqueue(object: Callback<UserModel> {
             override fun onResponse(
                 call: Call<UserModel>,
                 response: Response<UserModel>
             ) {
                 if (response.isSuccessful)
                 {
-                    Log.d("Profile", response.toString())
+                    Log.e("Profile", response.toString())
                     val result = response.body()!!.users_data
                     result.forEach {
-                        text_name.text = it.name
-                        text_username.text = it.username
+                        Log.e("Profile", it.name.toString())
+//                        text_name.text = it.name
                     }
                 }
             }

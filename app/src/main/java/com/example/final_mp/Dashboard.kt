@@ -2,12 +2,10 @@ package com.example.final_mp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
-import com.example.final_mp.backend.APIRetrofit
 import com.example.final_mp.fragment.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.navigation.NavigationBarView
 
 class Dashboard : AppCompatActivity() {
 
@@ -26,7 +24,7 @@ class Dashboard : AppCompatActivity() {
         curr(dashboard, username.toString())
 
 
-        bottom_navigation.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item ->
+        bottom_navigation.setOnItemSelectedListener { item ->
 
             when (item.itemId) {
                 R.id.dashboard -> curr(dashboard, username.toString())
@@ -35,16 +33,18 @@ class Dashboard : AppCompatActivity() {
                 R.id.profile -> curr(profile, username.toString())
             }
             true
-        })
+        }
 
         supportActionBar?.hide()
-
     }
 
     private fun curr(fragment: Fragment, data : String){
-        val bundle = Bundle()
-        bundle.putString("username", data)
+        Log.e("Dashboard", data)
         supportFragmentManager.beginTransaction().apply {
+            val bundle = Bundle().apply {
+                putString("username", data)
+            }
+            fragment.arguments = bundle
             replace(R.id.fram_nav, fragment)
                 .commit()
         }
